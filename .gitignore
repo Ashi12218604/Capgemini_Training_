@@ -1,0 +1,4 @@
+﻿dotnet-sdk-10.0.101-win-x64.exe
+bin/
+obj/
+*.exe
