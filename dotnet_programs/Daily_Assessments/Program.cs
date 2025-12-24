@@ -1,47 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using LibItems = LibrarySystem.Items;
-using LibrarySystem.Users;
-
-class Program
+﻿class Program
 {
     static void Main()
     {
-        List<LibItems.LibraryItem> items = new List<LibItems.LibraryItem>();
-
-        LibItems.Book book = new LibItems.Book { Title = "C# Fundamentals", Author = "John Doe", ItemID = 101 };
-        LibItems.Magazine magazine = new LibItems.Magazine { Title = "Tech Today", Author = "Jane Doe", ItemID = 201 };
-        LibItems.eBook ebook = new LibItems.eBook { Title = "AI Revolution", Author = "Sam Tech", ItemID = 301 };
-
-        items.Add(book);
-        items.Add(magazine);
-        items.Add(ebook);
-
-        foreach (var item in items)
+        Container<double> stockPrices = new Container<double>();
+        Console.WriteLine("Enter Stock Prices");
+        for (int i=1;i<=2;i++)
         {
-            item.DisplayDetails();
-            Console.WriteLine($"Late Fee for 3 days: {item.CalculateLateFee(3)}");
-            Console.WriteLine();
+            Console.Write($"Enter Stock Price {i}: ");
+            stockPrices.Add(double.Parse(Console.ReadLine()));
         }
+        Console.WriteLine("\nStock Prices List:");
+        foreach (var price in stockPrices.GetAll()) 
+            Console.WriteLine(price);
 
-        Console.WriteLine("Method selection happens at runtime");
+        Container<int> transactionIds = new Container<int>();
+        Console.WriteLine("\nEnter Transaction IDs");
+        for (int i=1;i<=2;i++)
+        {
+            Console.Write($"Enter Transaction ID {i}: ");
+            transactionIds.Add(int.Parse(Console.ReadLine()));
+        }
+        Console.WriteLine("\nTransaction IDs List:");
+        foreach (var id in transactionIds.GetAll()) 
+            Console.WriteLine(id);
 
-        LibItems.IReservable reservable = book;
-        LibItems.INotifiable notifiable = book;
-        reservable.Reserve();
-        notifiable.Notify("Please return the book on time.");
-
-        Console.WriteLine("Direct access restricted; functionality exposed only through interfaces.");
-        Console.WriteLine();
-
-        LibrarySystem.LibraryAnalytics.TotalBorrowed = 5;
-        LibrarySystem.LibraryAnalytics.ShowAnalytics();
-
-        Member user = new Member { Name = "Sanjana", Role = LibrarySystem.UserRole.Member };
-        Console.WriteLine($"User Role: {user.Role}");
-        Console.WriteLine($"Item Status: {LibrarySystem.ItemStatus.Borrowed}");
-
-        user.SendRoleBasedNotification();
-        ebook.Download();
+        Console.WriteLine("\nEnter Trade Details");
+        Trade userTrade=new Trade();
+        Console.Write("Enter Trade ID: ");
+        userTrade.TradeId=int.Parse(Console.ReadLine());
+        Console.Write("Enter Stock Symbol: ");
+        userTrade.Symbol=Console.ReadLine();
+        Repository<Trade> tradeRepo=new Repository<Trade>();
+        tradeRepo.Item=userTrade;
+        Console.WriteLine("Stored Trade in Repository:");
+        Console.WriteLine(tradeRepo.Item);
+        Console.WriteLine("\nPrinter Generic Method");
+        Printer printer=new Printer();
+        Console.Write("Enter a string: ");
+        printer.PrintData(Console.ReadLine());
+        Console.Write("Enter an integer: ");
+        printer.PrintData(int.Parse(Console.ReadLine()));
+        Console.Write("Enter a decimal: ");
+        printer.PrintData(decimal.Parse(Console.ReadLine()));
     }
 }
