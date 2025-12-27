@@ -1,6 +1,6 @@
 using System;
 using System.Text;
-public class Flipkey
+public class FlipKey
 {
     public string cleansandinvert(string input)
     {
